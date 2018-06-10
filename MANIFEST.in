@@ -1,0 +1,2 @@
+include README.md
+include citrine_point_sampler/tests/Examples/*.txt
