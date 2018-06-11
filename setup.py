@@ -12,7 +12,7 @@ setup(name='citrine_point_sampler',
       setup_requires=["pytest-runner"],
       tests_require=["pytest"],
       entry_points = {
-        'console_scripts': ['citrine_point_sampler-sampler=citrine_point_samplier.sampler.main'],
+        'console_scripts': ['citrine_point_sampler-sampler=citrine_point_samplier.sampler:main'],
       },
       include_package_data=True,
       zip_safe=False)
