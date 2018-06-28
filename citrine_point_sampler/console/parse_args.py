@@ -11,9 +11,11 @@ def parse_args(args):
     'input_file',
     type=check_fname_exists,
     help='Path to file containing instructions for generating points.')
+  # TODO - KR - Add safety checks for output file.
+  # E.g., output file should not be the same as input file.
   parser.add_argument(
     'output_file',
-    type=argparse.FileType('w'),
+    type=str,
     help='Filepath for output file that will be generated.')
   parser.add_argument(
     'n_results',

@@ -19,8 +19,5 @@ def test_arg_parser(example_input_files):
         str(idx+1)
       ])
     assert args.input_file == filepath
-    assert args.output_file.name == temp_output_filename
+    assert args.output_file == temp_output_filename
     assert args.n_results == idx+1
-    args.output_file.close()
-    os.remove(temp_output_filename)
-    assert not os.path.isfile(temp_output_filename)
