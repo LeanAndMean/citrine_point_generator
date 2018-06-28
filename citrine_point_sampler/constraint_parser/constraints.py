@@ -32,19 +32,27 @@ class Constraint():
       self.exprs.append(compile(constraint, "<string>", "eval"))
     # SanityCheck: Example point should satisfy constraints.
     if not self.apply(self.get_example()):
+      # Identify constraints that are failing.
+      failure_indices = self.failing_constraints(self.get_example())
+      assert len(failure_indices) > 0
       # Construct verbose error message.
       msg = "Example point does not satisfy the given constraints"
       msg += "\nPoint:\n  "
       msg += str(self.get_example())
       msg += "\nConstraints:\n"
+      comment_count = 0
       for i in range(2, len(lines)):
         # support comments in the first line
         if lines[i][0] == "#":
+          comment_count += 1
           continue
-        constraint = lines[i].strip('\n')
-        msg += "  "
-        msg += str(constraint)
-        msg += "\n"
+        # Convert to constraint index by subtracting 2 and number of commented
+        # lines.
+        if (i - 2 - comment_count) in failure_indices:
+          constraint = lines[i].strip('\n')
+          msg += "  "
+          msg += str(constraint)
+          msg += "\n"
       raise IOError(msg)
     return
 
@@ -66,3 +74,16 @@ class Constraint():
       if not eval(expr):
         return False
     return True
+
+  def failing_constraints(self, x):
+    """
+    Apply the constraints to a vector, returning a list of unsatisfied
+    constraints.
+
+    :param x: list or array on which to evaluate the constraints
+    """
+    failure_indices = []
+    for idx, expr in enumerate(self.exprs):
+      if not eval(expr):
+        failure_indices.append(idx)
+    return failure_indices
