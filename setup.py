@@ -10,7 +10,7 @@ setup(name='citrine_point_sampler',
       packages=['citrine_point_sampler'],
       install_requires=["numpy"],
       setup_requires=["pytest-runner"],
-      tests_require=["pytest"],
+      tests_require=["pytest","pytest-timeout"],
       entry_points = {
         'console_scripts': ['citrine_point_sampler-sampler=citrine_point_samplier.sampler:main'],
       },

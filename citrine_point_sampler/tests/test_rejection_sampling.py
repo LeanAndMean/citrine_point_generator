@@ -1,32 +1,42 @@
 """Tests rejection sampling generator."""
 
-import os, pytest, glob, sys
+import os, pytest, sys
 import citrine_point_sampler
 
 __author__ = "Kevin Ryan"
 __created__ = "6/9/2018"
 
-def test_rejection_sampling(example_input_files):
+def get_points(example_input_file,n_points=1000):
   # Collect example failures and report after testing all of them.
-  example_failures = []
-  for example_filepath in example_input_files:
-    try:
-      constraints = citrine_point_sampler.constraint_parser.Constraint(example_filepath)
-      try:
-        # Generate 10,000 points.
-        generated_points = citrine_point_sampler.generator.rejection_sampling.generate_points(
-          10000,
-          constraints)
-        # Print returned numpy array.
-        print(generated_points)
-      except:
-        example_failures.append([example_filepath,str(sys.exc_info()[1])])
-    except:
-      # Disregard failures of parser (this is covered by a different unit test).
-      pass
-  if len(example_failures) > 0:
-    print("{:d} failing example(s):".format(len(example_failures)))
-    for failures in example_failures:
-      print(' - '.join(failures))
-  assert len(example_failures) == 0
+  assert os.path.isfile(example_input_file)
+  constraints = citrine_point_sampler.constraint_parser.Constraint(
+    example_input_file)
+  # Generate points.
+  generated_points = citrine_point_sampler.generator.rejection_sampling.generate_points(
+    n_points,
+    constraints)
+  # Print returned numpy array.
+  print(generated_points)
 
+# Using individual tests to avoid obscuring problem input files that timeout.
+# alloy.txt is expected to timeout with rejection sampling.
+@pytest.mark.timeout(300)
+def test_alloy():
+  # Print function name to identify problem input files.
+  print("Running test function:",sys._getframe().f_code.co_name)
+  get_points('.\\citrine_point_sampler\\tests\\Examples\\alloy.txt')
+
+@pytest.mark.timeout(300)
+def test_example():
+  print("Running test function:",sys._getframe().f_code.co_name)
+  get_points('.\\citrine_point_sampler\\tests\\Examples\\example.txt')
+
+@pytest.mark.timeout(300)
+def test_formulation():
+  print("Running test function:",sys._getframe().f_code.co_name)
+  get_points('.\\citrine_point_sampler\\tests\\Examples\\formulation.txt')
+
+@pytest.mark.timeout(300)
+def test_mixture():
+  print("Running test function:",sys._getframe().f_code.co_name)
+  get_points('.\\citrine_point_sampler\\tests\\Examples\\mixture.txt')
