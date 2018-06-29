@@ -1,6 +1,6 @@
 """Tests rejection sampling generator."""
 
-import os, pytest
+import os, pytest, sys
 import citrine_point_sampler
 
 __author__ = "Kevin Ryan"
@@ -22,16 +22,21 @@ def get_points(example_input_file,n_points=1000):
 # alloy.txt is expected to timeout with rejection sampling.
 @pytest.mark.timeout(300)
 def test_alloy():
+  # Print function name to identify problem input files.
+  print("Running test function:",sys._getframe().f_code.co_name)
   get_points('.\\citrine_point_sampler\\tests\\Examples\\alloy.txt')
 
 @pytest.mark.timeout(300)
 def test_example():
+  print("Running test function:",sys._getframe().f_code.co_name)
   get_points('.\\citrine_point_sampler\\tests\\Examples\\example.txt')
 
 @pytest.mark.timeout(300)
 def test_formulation():
+  print("Running test function:",sys._getframe().f_code.co_name)
   get_points('.\\citrine_point_sampler\\tests\\Examples\\formulation.txt')
 
 @pytest.mark.timeout(300)
 def test_mixture():
+  print("Running test function:",sys._getframe().f_code.co_name)
   get_points('.\\citrine_point_sampler\\tests\\Examples\\mixture.txt')
