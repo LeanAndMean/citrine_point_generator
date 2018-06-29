@@ -20,23 +20,23 @@ def get_points(example_input_file,n_points=1000):
 
 # Using individual tests to avoid obscuring problem input files that timeout.
 # alloy.txt is expected to timeout with rejection sampling.
-@pytest.mark.timeout(300)
+@pytest.mark.timeout(330)
 def test_alloy():
   # Print function name to identify problem input files.
   print("Running test function:",sys._getframe().f_code.co_name)
   get_points('.\\citrine_point_sampler\\tests\\Examples\\alloy.txt')
 
-@pytest.mark.timeout(300)
+@pytest.mark.timeout(330)
 def test_example():
   print("Running test function:",sys._getframe().f_code.co_name)
   get_points('.\\citrine_point_sampler\\tests\\Examples\\example.txt')
 
-@pytest.mark.timeout(300)
+@pytest.mark.timeout(330)
 def test_formulation():
   print("Running test function:",sys._getframe().f_code.co_name)
   get_points('.\\citrine_point_sampler\\tests\\Examples\\formulation.txt')
 
-@pytest.mark.timeout(300)
+@pytest.mark.timeout(330)
 def test_mixture():
   print("Running test function:",sys._getframe().f_code.co_name)
   get_points('.\\citrine_point_sampler\\tests\\Examples\\mixture.txt')
