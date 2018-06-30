@@ -21,4 +21,9 @@ def parse_args(args):
     'n_results',
     type=check_positive,
     help='Number of points to generate.')
+  parser.add_argument(
+    '--timeout',
+    type=check_positive,
+    default=280,
+    help='Seconds until script exists.')
   return parser.parse_args(args)

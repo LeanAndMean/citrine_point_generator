@@ -6,7 +6,7 @@ import citrine_point_sampler
 __author__ = "Kevin Ryan"
 __created__ = "6/9/2018"
 
-def get_points(example_input_file,n_points=1000):
+def get_points(example_input_file,n_points=1000,timeout=300):
   # Collect example failures and report after testing all of them.
   assert os.path.isfile(example_input_file)
   constraints = citrine_point_sampler.constraint_parser.Constraint(
@@ -14,29 +14,32 @@ def get_points(example_input_file,n_points=1000):
   # Generate points.
   generated_points = citrine_point_sampler.generator.rejection_sampling.generate_points(
     n_points,
-    constraints)
+    constraints,
+    timeout=timeout)
   # Print returned numpy array.
   print(generated_points)
 
 # Using individual tests to avoid obscuring problem input files that timeout.
 # alloy.txt is expected to timeout with rejection sampling.
-@pytest.mark.timeout(330)
+@pytest.mark.timeout(300)
+@pytest.mark.xfail()
 def test_alloy():
   # Print function name to identify problem input files.
-  print("Running test function:",sys._getframe().f_code.co_name)
-  get_points('.\\citrine_point_sampler\\tests\\Examples\\alloy.txt')
+  print("Running rejection sampling test function:",sys._getframe().f_code.co_name)
+  # Limit this test to 10 seconds since it isn't expected to pass.
+  get_points('.\\citrine_point_sampler\\tests\\Examples\\alloy.txt',timeout=10)
 
-@pytest.mark.timeout(330)
+@pytest.mark.timeout(300)
 def test_example():
-  print("Running test function:",sys._getframe().f_code.co_name)
+  print("Running rejection sampling test function:",sys._getframe().f_code.co_name)
   get_points('.\\citrine_point_sampler\\tests\\Examples\\example.txt')
 
-@pytest.mark.timeout(330)
+@pytest.mark.timeout(300)
 def test_formulation():
-  print("Running test function:",sys._getframe().f_code.co_name)
+  print("Running rejection sampling test function:",sys._getframe().f_code.co_name)
   get_points('.\\citrine_point_sampler\\tests\\Examples\\formulation.txt')
 
-@pytest.mark.timeout(330)
+@pytest.mark.timeout(300)
 def test_mixture():
-  print("Running test function:",sys._getframe().f_code.co_name)
+  print("Running rejection sampling test function:",sys._getframe().f_code.co_name)
   get_points('.\\citrine_point_sampler\\tests\\Examples\\mixture.txt')
